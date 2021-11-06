@@ -11,7 +11,7 @@ class EchoApiView(APIView):
 
     def get(self, request, name):
         """Returns a list of APIView features"""
-        return Response({'message': f'Echo Api param: {name} query: {request.query_params.get("id")}'})
+        return Response({'message': 'APIView', 'query': request.query_params.get("id"), 'param': name, 'token': request.META.get("HTTP_TOKEN")})
 
 
 class EchoViewSet(viewsets.ViewSet):
@@ -21,7 +21,7 @@ class EchoViewSet(viewsets.ViewSet):
     def list(self):
         """Return a hello message"""
         print("view-set  ")
-        print(self.request.query_params.get('name', False))
+        # print(self.request.query_params.get('name', False))
         # print(request.query_params)
         return Response({'message': 'Echo View'})
 
