@@ -1,8 +1,9 @@
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, ModelViewSet
 from core import serializers
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 
 
 class EchoApiView(APIView):
@@ -44,43 +45,45 @@ class EchoViewSet(ViewSet):
     """Test API ViewSet"""
     serializer_class = serializers.EchoSerializer
 
+    # defined update(put) and partial_update(patch) do not take any query
+    # defined create(post) does not take any param or query
+
     def list(self, request, *args, **kwargs):
         """Return a hello message"""
         return Response({'message': 'ViewSet', 'method': request.method,
                          'query': request.query_params.get("id", False),
                          'param': kwargs.get("name", False), 'token': request.META.get("HTTP_TOKEN")})
 
-    # def create(self, request, *args, **kwargs):
-    #     """Return a hello message"""
-    #     return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id"),
-    #                      'param': kwargs.get("name", False), 'token': request.META.get("HTTP_TOKEN")})
+    def create(self, request):
+        """Create a new hello message"""
+        return Response({'message': 'ViewSet', 'method': request.method, 'token': request.META.get("HTTP_TOKEN")})
 
-    # def create(self, request):
-    #     """Create a new hello message"""
-    #     serializer = self.serializer_class(data=request.data)
-    #
-    #     if serializer.is_valid():
-    #         name = serializer.validated_data.get('name')
-    #         message = f'Hello {name}!'
-    #         return Response({'message': message})
-    #     else:
-    #         return Response(
-    #             serializer.errors,
-    #             status=status.HTTP_400_BAD_REQUEST
-    #         )
-    #
-    # def retrieve(self, request, pk=None):
-    #     """Handle getting an object by its ID"""
-    #     return Response({'http_method': 'GET'})
-    #
-    # def update(self, request, pk=None):
-    #     """Handle a updating an object"""
-    #     return Response({'http_method': 'PUT'})
-    #
-    # def partial_update(self, request, pk=None):
-    #     """Handle updating part of an object"""
-    #     return Response({'http_method': 'PATCH'})
-    #
-    # def destroy(self, request, pk=None):
-    #     """handle removing an object"""
-    #     return Response({'http_method': 'DELETE'})
+    def retrieve(self, request, pk=None):
+        """Handle getting an object by its ID"""
+        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+
+    def update(self, request, pk=None):
+        """Handle a updating an object"""
+        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+
+    def partial_update(self, request, pk=None):
+        """Handle updating part of an object"""
+        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+
+    def destroy(self, request, pk=None):
+        """handle removing an object"""
+        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+
+
+class EchoModelViewSet(ViewSet):
+
+    @action(detail=True, methods=['get', 'post', 'put', 'patch', 'delete'])
+    def details(self, request, pk=None):
+        """Return a hello message"""
+        return Response({'message': 'ViewSet', 'method': request.method,
+                         'query': request.query_params.get("id", False),
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})

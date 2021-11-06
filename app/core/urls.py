@@ -7,6 +7,8 @@ router = DefaultRouter()
 
 # router.register('view', views.EchoViewSet, base_name='view')
 router.register('view/(?P<name>.+)/details', views.EchoViewSet, base_name='view')
+router.register('view-pk', views.EchoViewSet, base_name='view-pk')
+router.register('model-view', views.EchoModelViewSet, base_name='model-view')
 # .as_view({'get': 'retrieve', 'post':'create'})
 
 urlpatterns = [
