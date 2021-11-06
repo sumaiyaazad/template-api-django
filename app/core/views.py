@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework.viewsets import ViewSet
 from core import serializers
 from rest_framework import status
 from rest_framework.views import APIView
@@ -11,20 +11,21 @@ class EchoApiView(APIView):
 
     def get(self, request, name):
         """Returns a list of APIView features"""
-        return Response({'message': 'APIView', 'query': request.query_params.get("id"), 'param': name, 'token': request.META.get("HTTP_TOKEN")})
+        return Response(
+            {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
+             'token': request.META.get("HTTP_TOKEN")})
 
 
-class EchoViewSet(viewsets.ViewSet):
+
+
+class EchoViewSet(ViewSet):
     """Test API ViewSet"""
     serializer_class = serializers.EchoSerializer
 
-    def list(self):
+    def list(self, request, *args, **kwargs):
         """Return a hello message"""
-        print("view-set  ")
-        # print(self.request.query_params.get('name', False))
-        # print(request.query_params)
-        return Response({'message': 'Echo View'})
-
+        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id"),
+                         'param': kwargs["name"], 'token': request.META.get("HTTP_TOKEN")})
 
     # def create(self, request):
     #     """Create a new hello message"""
