@@ -7,6 +7,6 @@ router = DefaultRouter()
 router.register('view/', views.EchoViewSet, base_name='view')
 
 urlpatterns = [
-    path('api/<name>/details/', views.EchoApiView.as_view()),
+    path('api/<name>/details', views.EchoApiView.as_view()),
     path('', include(router.urls))
 ]
