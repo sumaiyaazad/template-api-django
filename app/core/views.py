@@ -15,7 +15,29 @@ class EchoApiView(APIView):
             {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
              'token': request.META.get("HTTP_TOKEN")})
 
+    def post(self, request, name):
+        """Returns a list of APIView features"""
+        return Response(
+            {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
+             'token': request.META.get("HTTP_TOKEN")})
 
+    def put(self, request, name):
+        """Returns a list of APIView features"""
+        return Response(
+            {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
+             'token': request.META.get("HTTP_TOKEN")})
+
+    def patch(self, request, name):
+        """Returns a list of APIView features"""
+        return Response(
+            {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
+             'token': request.META.get("HTTP_TOKEN")})
+
+    def delete(self, request, name):
+        """Returns a list of APIView features"""
+        return Response(
+            {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
+             'token': request.META.get("HTTP_TOKEN")})
 
 
 class EchoViewSet(ViewSet):
@@ -24,8 +46,14 @@ class EchoViewSet(ViewSet):
 
     def list(self, request, *args, **kwargs):
         """Return a hello message"""
-        return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id"),
-                         'param': kwargs["name"], 'token': request.META.get("HTTP_TOKEN")})
+        return Response({'message': 'ViewSet', 'method': request.method,
+                         'query': request.query_params.get("id", False),
+                         'param': kwargs.get("name", False), 'token': request.META.get("HTTP_TOKEN")})
+
+    # def create(self, request, *args, **kwargs):
+    #     """Return a hello message"""
+    #     return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id"),
+    #                      'param': kwargs.get("name", False), 'token': request.META.get("HTTP_TOKEN")})
 
     # def create(self, request):
     #     """Create a new hello message"""
