@@ -20,19 +20,19 @@ class EchoApiView(APIView):
         """Returns a list of APIView features"""
         return Response(
             {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
-             'token': request.META.get("HTTP_TOKEN")})
+             'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def put(self, request, name):
         """Returns a list of APIView features"""
         return Response(
             {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
-             'token': request.META.get("HTTP_TOKEN")})
+             'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def patch(self, request, name):
         """Returns a list of APIView features"""
         return Response(
             {'message': 'APIView', 'method': request.method, 'query': request.query_params.get("id"), 'param': name,
-             'token': request.META.get("HTTP_TOKEN")})
+             'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def delete(self, request, name):
         """Returns a list of APIView features"""
@@ -56,7 +56,7 @@ class EchoViewSet(ViewSet):
 
     def create(self, request):
         """Create a new hello message"""
-        return Response({'message': 'ViewSet', 'method': request.method, 'token': request.META.get("HTTP_TOKEN")})
+        return Response({'message': 'ViewSet', 'method': request.method, 'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def retrieve(self, request, pk=None):
         """Handle getting an object by its ID"""
@@ -66,12 +66,12 @@ class EchoViewSet(ViewSet):
     def update(self, request, pk=None):
         """Handle a updating an object"""
         return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
-                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def partial_update(self, request, pk=None):
         """Handle updating part of an object"""
         return Response({'message': 'ViewSet', 'method': request.method, 'query': request.query_params.get("id", False),
-                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
 
     def destroy(self, request, pk=None):
         """handle removing an object"""
@@ -86,4 +86,4 @@ class EchoModelViewSet(ViewSet):
         """Return a hello message"""
         return Response({'message': 'ViewSet', 'method': request.method,
                          'query': request.query_params.get("id", False),
-                         'param': pk, 'token': request.META.get("HTTP_TOKEN")})
+                         'param': pk, 'token': request.META.get("HTTP_TOKEN"), 'body': request.data})
